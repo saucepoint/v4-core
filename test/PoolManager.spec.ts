@@ -138,7 +138,7 @@ describe('PoolManager', () => {
       }
       await invalidToken.approve(modifyPositionTest.address, constants.MaxUint256)
       await manager.initialize(key, encodeSqrtPriceX96(1, 1), '0x00')
-      await modifyPositionTest.modifyPosition(key, {
+      await modifyPositionTest["modifyPosition((address,address,uint24,int24,address),(int24,int24,int256))"](key, {
         tickLower: -60,
         tickUpper: 60,
         liquidityDelta: 100,
@@ -162,7 +162,7 @@ describe('PoolManager', () => {
         tickSpacing: 10,
       }
       await manager.initialize(key, encodeSqrtPriceX96(1, 1), '0x00')
-      await modifyPositionTest.modifyPosition(key, {
+      await modifyPositionTest["modifyPosition((address,address,uint24,int24,address),(int24,int24,int256))"](key, {
         tickLower: -60,
         tickUpper: 60,
         liquidityDelta: 100,
@@ -183,7 +183,7 @@ describe('PoolManager', () => {
         tickSpacing: 10,
       }
       await manager.initialize(key, encodeSqrtPriceX96(1, 1), '0x00')
-      await modifyPositionTest.modifyPosition(
+      await modifyPositionTest["modifyPosition((address,address,uint24,int24,address),(int24,int24,int256))"](
         key,
         {
           tickLower: -60,
@@ -261,7 +261,7 @@ describe('PoolManager', () => {
         expect(protocolFees).to.eq(BigNumber.from(poolProtocolFee).shl(12))
 
         // add liquidity around the initial price
-        await modifyPositionTest.modifyPosition(poolKey, {
+        await modifyPositionTest["modifyPosition((address,address,uint24,int24,address),(int24,int24,int256))"](poolKey, {
           tickLower: -120,
           tickUpper: 120,
           liquidityDelta: expandTo18Decimals(10),
@@ -269,7 +269,7 @@ describe('PoolManager', () => {
       })
 
       it('allows the owner to collect accumulated fees', async () => {
-        await swapTest.swap(
+        await swapTest["swap((address,address,uint24,int24,address),(bool,int256,uint160),(bool,bool))"](
           {
             currency0: tokens.currency0.address,
             currency1: tokens.currency1.address,
@@ -311,7 +311,7 @@ describe('PoolManager', () => {
       })
 
       it('returns all fees if 0 is provided', async () => {
-        await swapTest.swap(
+        await swapTest["swap((address,address,uint24,int24,address),(bool,int256,uint160),(bool,bool))"](
           {
             currency0: tokens.currency0.address,
             currency1: tokens.currency1.address,
@@ -377,7 +377,7 @@ describe('PoolManager', () => {
         expect(protocolFees).to.eq(BigNumber.from(poolProtocolFee).shl(12))
 
         // add liquidity around the initial price
-        await modifyPositionTest.modifyPosition(
+        await modifyPositionTest["modifyPosition((address,address,uint24,int24,address),(int24,int24,int256))"](
           poolKey,
           {
             tickLower: -120,
@@ -391,7 +391,7 @@ describe('PoolManager', () => {
       })
 
       it('allows the owner to collect accumulated fees', async () => {
-        await swapTest.swap(
+        await swapTest["swap((address,address,uint24,int24,address),(bool,int256,uint160),(bool,bool))"](
           {
             currency0: ADDRESS_ZERO,
             currency1: tokens.currency1.address,
@@ -436,7 +436,7 @@ describe('PoolManager', () => {
       })
 
       it('returns all fees if 0 is provided', async () => {
-        await swapTest.swap(
+        await swapTest["swap((address,address,uint24,int24,address),(bool,int256,uint160),(bool,bool))"](
           {
             currency0: ADDRESS_ZERO,
             currency1: tokens.currency1.address,

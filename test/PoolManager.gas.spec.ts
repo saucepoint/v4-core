@@ -80,7 +80,7 @@ describe('PoolManager gas tests', () => {
       }
 
       const swapExact0For1: SwapFunction = (amount, to, sqrtPriceLimitX96) => {
-        return swapTest.swap(
+        return swapTest["swap((address,address,uint24,int24,address),(bool,int256,uint160),(bool,bool))"](
           poolKey,
           {
             zeroForOne: true,
@@ -94,7 +94,7 @@ describe('PoolManager gas tests', () => {
         )
       }
       const swapToHigherPrice: SwapToPriceFunction = (sqrtPriceX96, to) => {
-        return swapTest.swap(
+        return swapTest["swap((address,address,uint24,int24,address),(bool,int256,uint160),(bool,bool))"](
           poolKey,
           {
             zeroForOne: false,
@@ -122,7 +122,7 @@ describe('PoolManager gas tests', () => {
         )
       }
       const modifyPosition: ModifyPositionFunction = (tickLower, tickUpper, liquidityDelta) => {
-        return modifyPositionTest.modifyPosition(poolKey, {
+        return modifyPositionTest["modifyPosition((address,address,uint24,int24,address),(int24,int24,int256))"](poolKey, {
           tickLower,
           tickUpper,
           liquidityDelta,
@@ -362,7 +362,7 @@ describe('PoolManager gas tests', () => {
       }
 
       const swapExact0For1: SwapFunction = (amount, to, sqrtPriceLimitX96) => {
-        return swapTest.swap(
+        return swapTest["swap((address,address,uint24,int24,address),(bool,int256,uint160),(bool,bool))"](
           poolKey,
           {
             zeroForOne: true,
@@ -379,7 +379,7 @@ describe('PoolManager gas tests', () => {
         )
       }
       const swapToHigherPrice: SwapToPriceFunction = (sqrtPriceX96, to) => {
-        return swapTest.swap(
+        return swapTest["swap((address,address,uint24,int24,address),(bool,int256,uint160),(bool,bool))"](
           poolKey,
           {
             zeroForOne: false,
@@ -410,7 +410,7 @@ describe('PoolManager gas tests', () => {
         )
       }
       const modifyPosition: ModifyPositionFunction = (tickLower, tickUpper, liquidityDelta) => {
-        return modifyPositionTest.modifyPosition(
+        return modifyPositionTest["modifyPosition((address,address,uint24,int24,address),(int24,int24,int256))"](
           poolKey,
           {
             tickLower,
