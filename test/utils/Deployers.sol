@@ -42,7 +42,7 @@ contract Deployers {
     // Global variables
     Currency internal currency0;
     Currency internal currency1;
-    PoolManager manager;
+    IPoolManager manager;
     PoolModifyPositionTest modifyPositionRouter;
     PoolSwapTest swapRouter;
     PoolDonateTest donateRouter;
@@ -60,7 +60,7 @@ contract Deployers {
     PoolKey uninitializedNativeKey;
 
     function deployFreshManager() internal {
-        manager = new PoolManager(500000);
+        manager = IPoolManager(new PoolManager(500000));
     }
 
     function deployFreshManagerAndRouters() internal {

@@ -297,9 +297,9 @@ contract AccessLockTest is Test, Deployers {
             tickSpacing: 60,
             hooks: IHooks(address(0))
         });
-        (Pool.Slot0 memory slot0,,,) = manager.pools(newKey.toId());
+        (uint160 sqrtPriceX96,,) = manager.getSlot0(newKey.toId());
 
-        assertEq(slot0.sqrtPriceX96, Constants.SQRT_RATIO_1_2);
+        assertEq(sqrtPriceX96, Constants.SQRT_RATIO_1_2);
     }
 
     /**
