@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 
 import {IHooks} from "../interfaces/IHooks.sol";
 
-/// @notice This is a temporary library that allows us to use transient storage (tstore/tload)
+/// @notice This is a temporary library that allows us to use transient storage (sstore/sload)
 /// for the lockers array and nonzero delta count.
 /// TODO: This library can be deleted when we have the transient keyword support in solidity.
 library Lockers {
@@ -34,13 +34,13 @@ library Lockers {
 
         assembly {
             // add the locker
-            tstore(thisLockerSlot, locker)
+            sstore(thisLockerSlot, locker)
 
             // add the lock caller
-            tstore(add(thisLockerSlot, 1), lockCaller)
+            sstore(add(thisLockerSlot, 1), lockCaller)
 
             // increase the length
-            tstore(slot, newLength)
+            sstore(slot, newLength)
         }
     }
 
@@ -52,21 +52,21 @@ library Lockers {
             newLength = length() - 1;
         }
         assembly {
-            tstore(slot, newLength)
+            sstore(slot, newLength)
         }
     }
 
     function length() internal view returns (uint256 _length) {
         uint256 slot = LOCKERS_SLOT;
         assembly {
-            _length := tload(slot)
+            _length := sload(slot)
         }
     }
 
     function clear() internal {
         uint256 slot = LOCKERS_SLOT;
         assembly {
-            tstore(slot, 0)
+            sstore(slot, 0)
         }
     }
 
@@ -74,7 +74,7 @@ library Lockers {
         // first slot of the ith array item
         uint256 slot = LOCKERS_SLOT + (i * LOCKER_STRUCT_SIZE);
         assembly {
-            locker := tload(slot)
+            locker := sload(slot)
         }
     }
 
@@ -82,7 +82,7 @@ library Lockers {
         // second slot of the ith array item
         uint256 slot = LOCKERS_SLOT + (i * LOCKER_STRUCT_SIZE + 1);
         assembly {
-            locker := tload(slot)
+            locker := sload(slot)
         }
     }
 
@@ -97,16 +97,16 @@ library Lockers {
     function nonzeroDeltaCount() internal view returns (uint256 count) {
         uint256 slot = NONZERO_DELTA_COUNT;
         assembly {
-            count := tload(slot)
+            count := sload(slot)
         }
     }
 
     function incrementNonzeroDeltaCount() internal {
         uint256 slot = NONZERO_DELTA_COUNT;
         assembly {
-            let count := tload(slot)
+            let count := sload(slot)
             count := add(count, 1)
-            tstore(slot, count)
+            sstore(slot, count)
         }
     }
 
@@ -115,9 +115,9 @@ library Lockers {
     function decrementNonzeroDeltaCount() internal {
         uint256 slot = NONZERO_DELTA_COUNT;
         assembly {
-            let count := tload(slot)
+            let count := sload(slot)
             count := sub(count, 1)
-            tstore(slot, count)
+            sstore(slot, count)
         }
     }
 
@@ -128,7 +128,7 @@ library Lockers {
     function getHook(uint256 i) internal view returns (address hook) {
         uint256 slot = HOOK_ADDRESS_SLOT + i;
         assembly {
-            hook := tload(slot)
+            hook := sload(slot)
         }
     }
 
@@ -138,7 +138,7 @@ library Lockers {
         if (address(getCurrentHook()) == address(0)) {
             uint256 slot = HOOK_ADDRESS_SLOT + length();
             assembly {
-                tstore(slot, currentHook)
+                sstore(slot, currentHook)
             }
             return true;
         }
@@ -147,7 +147,7 @@ library Lockers {
     function clearCurrentHook() internal {
         uint256 slot = HOOK_ADDRESS_SLOT + length();
         assembly {
-            tstore(slot, 0)
+            sstore(slot, 0)
         }
     }
 }
